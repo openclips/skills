@@ -1,0 +1,13 @@
+skill: openclips-ad-craft
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: []                                                             # the server is connected and craft still calls nothing: any call is a denial
+assert:
+  mcp_connected: true
+  denied_tools: []                                                    # craft never calls a tool, even with the server connected
+  tools_not_called: [Bash, WebFetch, WebSearch]
+  result_regex_all:
+    - '\b\d+(?::\d\d)?(?:\.\d)?\s*(?:s|sec(?:onds?|s)?)?\s*(?:to|-|–)\s*(?:\d+:\d\d|\d+(?:\.\d)?\s*(?:s|sec(?:onds?|s)?))\b'      # shots carry a time range
+    - '(?i)\b(close-up|close up|push-in|push in|pull-out|pull out|tracking|wide shot|medium shot|insert|overhead|low angle|static)\b'   # generic shot vocabulary
+  result_not_regex: '(?i)(preview_cost|\d+ credits)'

@@ -1,0 +1,11 @@
+skill: openclips-real-estate
+shape: pauses-before-spending
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [call_api]      # the property preview route runs through call_api; the hook allows preview_cost only
+  tools_not_called: [generate_clips_video, generate_marketplace_proxy]
+  denied_tools: []
+  result_regex: '(?i)(proceed\?|go ahead|approve|shall I)'

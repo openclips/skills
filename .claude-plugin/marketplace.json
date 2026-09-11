@@ -1,0 +1,23 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "openclips",
+  "owner": {
+    "name": "OpenClips",
+    "url": "https://openclips.ai"
+  },
+  "metadata": {
+    "description": "Official OpenClips skills: make ad creative from your product catalogue.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "openclips",
+      "source": "./",
+      "description": "Make ad creative from your product catalogue with OpenClips: image ads, marketing videos and creator clips, through the OpenClips MCP server.",
+      "version": "0.1.0",
+      "category": "design",
+      "homepage": "https://openclips.ai",
+      "license": "MIT"
+    }
+  ]
+}

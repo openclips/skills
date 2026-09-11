@@ -1,0 +1,7 @@
+{"type":"system","subtype":"init","session_id":"sess-2","apiKeySource":"apiKeyHelper","mcp_servers":[{"name":"openclips","status":"connected"}],"mcp_server_errors":[]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","id":"t1","name":"mcp__openclips__list_my_workspaces","input":{}}]}}
+{"type":"user","message":{"content":[{"type":"tool_result","tool_use_id":"t1","content":"[{\"id\":976}]"}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","id":"t2","name":"mcp__openclips__generate_image_templates","input":{"workspace_id":976,"productId":2373,"outputFormats":["square"],"quantity":1}}]}}
+{"type":"system","subtype":"permission_denied","tool_name":"mcp__openclips__generate_image_templates","tool_use_id":"t2","decision_reason_type":"asyncAgent"}
+{"type":"user","message":{"content":[{"type":"tool_result","tool_use_id":"t2","content":"Permission for this tool use was denied. It requires approval, and this session has no approval surface.","is_error":true}]}}
+{"type":"result","subtype":"success","session_id":"sess-2","result":"I need your go-ahead before generating.","total_cost_usd":0.29,"num_turns":3,"permission_denials":[{"tool_name":"mcp__openclips__generate_image_templates","tool_use_id":"t2","tool_input":{"workspace_id":976,"productId":2373,"outputFormats":["square"],"quantity":1}}],"is_error":false}

@@ -1,0 +1,11 @@
+skill: openclips-api
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [list_endpoints]           # folders have no dedicated tool: the route is found first
+  tools_not_called: [generate_marketplace_proxy, generate_image_templates, generate_clips_video]
+  denied_tools: [call_api]                          # one direct write, no cost gate, no credits
+  result_not_regex: '(?i)(this will cost|preview(ed)? the cost)'
