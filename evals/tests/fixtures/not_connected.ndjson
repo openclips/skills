@@ -1,0 +1,2 @@
+{"type":"system","subtype":"init","session_id":"sess-3","mcp_servers":[],"mcp_server_errors":[]}
+{"type":"result","subtype":"success","session_id":"sess-3","result":"OpenClips is not connected. Add it with: claude mcp add --transport http --scope user openclips https://mcp.openclips.ai/mcp, then run /mcp to sign in.","total_cost_usd":0.05,"num_turns":1,"permission_denials":[],"is_error":false}

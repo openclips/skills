@@ -1,0 +1,10 @@
+skill: openclips-competitor-recreate
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  tools_not_called: [call_api]
+  result_regex: '(?i)(which (ad|competitor)|link|url|attach|paste|share the ad)'   # asks for the reference; never invents or fetches one

@@ -1,0 +1,14 @@
+skill: openclips-api
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  tools_not_called: [call_api]                      # a how-do-I question runs nothing
+  result_regex_all:
+    - 'X-Auth-Token'
+    - '(?i)preview_cost'
+    - 'api\.openclips\.ai'
+  result_not_regex: '(?i)((paste|send|share|give|provide|tell)\s+(me\s+)?(your|the)\s+(api\s+|access\s+)?(token|key)\b(?!\s+(into|in|to|out|from|as|via|on|through|using|along|with\s+(every|each|the|all|your|a|an))\b)|what(.s| is) your (api |access )?(token|key))'   # never asks for the credential; "paste the token into an env var" is advice, not a request

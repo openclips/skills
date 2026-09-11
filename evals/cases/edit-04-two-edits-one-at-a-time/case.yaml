@@ -1,0 +1,12 @@
+skill: openclips-edit
+shape: fires-after-consent
+turns: 2
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog, wait_for_creative, await_product]
+assert_turn1:
+  denied_tools: []
+  result_regex: '(?i)(first|one at a time|then|after|second)'    # says the upscale waits for the cut-out result
+assert:
+  mcp_connected: true
+  denied_tools: [enhance_asset_proxy]     # background removal is a signal-level enhance and goes first; the upscale is a second gate on the new id
+  tools_not_called: [generate_marketplace_proxy]

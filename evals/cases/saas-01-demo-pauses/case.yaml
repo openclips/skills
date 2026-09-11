@@ -1,0 +1,11 @@
+skill: openclips-saas-explainer
+shape: pauses-before-spending
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [clips_catalog]          # the lane's requirements are read live before composing
+  tools_not_called: [generate_marketplace_proxy, generate_image_templates]
+  denied_tools: []
+  result_regex: '(?i)(proceed\?|go ahead|approve|shall I)'     # the format defaults to the first in the catalogue's list; no question

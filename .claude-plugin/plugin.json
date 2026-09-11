@@ -1,0 +1,23 @@
+{
+  "name": "openclips",
+  "version": "0.1.0",
+  "description": "Make ad creative from your product catalogue with OpenClips: image ads, marketing videos and creator clips, through the OpenClips MCP server.",
+  "author": {
+    "name": "OpenClips",
+    "url": "https://openclips.ai"
+  },
+  "homepage": "https://openclips.ai",
+  "repository": "https://github.com/openclips/skills",
+  "license": "MIT",
+  "keywords": [
+    "openclips",
+    "mcp",
+    "advertising",
+    "ad-creative",
+    "image-generation",
+    "video-generation",
+    "ugc",
+    "skills"
+  ],
+  "mcpServers": "./.mcp.json"
+}
