@@ -32,7 +32,7 @@ This pack writes every tool as `openclips:<tool>`. Your host names them accordin
 
 Some hosts list tools by name only until they are loaded. Before deciding OpenClips is missing, search your tools for one whose name ends in `list_my_workspaces`.
 
-- **No OpenClips server at all:** tell the user how to connect it (read `references/connect.md`) and stop.
+- **No OpenClips server at all:** before answering anything else, read `references/connect.md` and reply with the install step for this host (Claude Code: `/plugin marketplace add https://github.com/openclips/skills`, `/plugin install openclips@openclips`, then `/mcp` to sign in). Do not describe what OpenClips can do and do not offer to check a workspace; there is none until the server is connected.
 - **The server is there but not signed in** (the host says it needs authentication, or shows it with no tools): tell the user to open `/mcp`, choose OpenClips and authenticate, or reconnect it in claude.ai connector settings. Do not reinstall, and do not retry in a loop.
 - **More than one server exposes OpenClips tools:** prefer the one named exactly `openclips` or `OpenClips`. If that does not settle it, ask the user which to use.
 

@@ -4,6 +4,13 @@ All notable changes to this pack. The format follows Keep a Changelog, and the p
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-13
+
+### Fixed
+- With no OpenClips server connected, the hub now gives the install steps first instead of describing capabilities and offering to check a workspace that is not there.
+- The Codex, Cursor and generic install commands are non-interactive: `npx skills add openclips/skills -y --skill '*' --agent <name>`. The bare form stops at a selection prompt.
+- `openclips-api` never fetches the developer guides; it gives the links.
+
 ## [0.1.1] - 2026-09-13
 
 ### Changed

@@ -12,11 +12,11 @@ Two things have to be true: the skills are installed, and the OpenClips MCP serv
 |---|---|
 | Claude Code | `/plugin marketplace add https://github.com/openclips/skills`, then `/plugin install openclips@openclips`, then `/mcp` to sign in. The plugin installs the skills and registers the server together. |
 | Cowork | Customize, then Plugins: add the marketplace `openclips/skills`, install `openclips`, and sign in when prompted. |
-| Codex | `codex mcp add openclips --url https://mcp.openclips.ai/mcp` (sign-in opens at once), then `npx skills add openclips/skills`. |
-| Cursor | Add `"openclips": {"url": "https://mcp.openclips.ai/mcp"}` under `mcpServers` in `~/.cursor/mcp.json`, then `npx skills add openclips/skills`. |
+| Codex | `codex mcp add openclips --url https://mcp.openclips.ai/mcp` (sign-in opens at once), then `npx skills add openclips/skills -y --skill '*' --agent codex`. |
+| Cursor | Add `"openclips": {"url": "https://mcp.openclips.ai/mcp"}` under `mcpServers` in `~/.cursor/mcp.json`, then `npx skills add openclips/skills -y --skill '*' --agent cursor`. |
 | claude.ai chat | Customize, then Connectors: add a custom connector named `OpenClips` with the URL above. Chat gets the server only; plugins and skills do not load there. |
 
-Skills-only installs (`npx skills add openclips/skills`, or `gh skill install openclips/skills --all --agent claude-code --scope user`) copy the skills and do not add the server. Full details, including what to do when sign-in fails, are in [INSTALL.md](INSTALL.md). Pointing an agent at [INSTALL_FOR_AGENTS.md](INSTALL_FOR_AGENTS.md) lets it install and verify the pack itself.
+Skills-only installs (`npx skills add openclips/skills -y --skill '*' --agent '*'`, or `gh skill install openclips/skills --all --agent claude-code --scope user`) copy the skills and do not add the server. Full details, including what to do when sign-in fails, are in [INSTALL.md](INSTALL.md). Pointing an agent at [INSTALL_FOR_AGENTS.md](INSTALL_FOR_AGENTS.md) lets it install and verify the pack itself.
 
 ## Skills
 
