@@ -9,8 +9,8 @@ description: >-
   for ads", "four image ads for this product", "make an ad from this photo",
   "ad in the style of this template", "use an image model by name". NOT
   for: changing a creative that exists, resizing, translating, upscaling or
-  variations of it (openclips-edit), a competitor's ad as the source
-  (openclips-competitor-recreate), any video (openclips-video-ads, or
+  variations of it (openclips-edit), a competitor's ad as the source (not
+  offered), any video (openclips-video-ads, or
   openclips-clips for a person on camera), listing images
   (openclips-real-estate), a whole store (openclips-ecommerce), a product not
   yet in the workspace (openclips-catalog-setup), copy with nothing to attach

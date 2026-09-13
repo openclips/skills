@@ -10,7 +10,8 @@ description: >-
   "upscale it", "make it sharper", "remove the background", "fix the
   lighting", "make three versions of this", "write copy for this creative",
   "lip-sync this to my audio". NOT for: a brand-new image or video (openclips-image-ads,
-  openclips-video-ads, openclips-clips), a competitor's ad as the source (openclips-competitor-recreate), editing a
+  openclips-video-ads, openclips-clips), a competitor's ad as the source
+  (not offered), editing a
   product's details (openclips-catalog-setup), deleting a creative
   (openclips-api), sizes or markets across a whole catalogue
   (openclips-ecommerce), copy with nothing to attach it to

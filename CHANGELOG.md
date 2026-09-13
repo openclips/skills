@@ -4,6 +4,11 @@ All notable changes to this pack. The format follows Keep a Changelog, and the p
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-13
+
+### Removed
+- `openclips-competitor-recreate`. Recreating a competitor's ad is no longer offered by this pack; the hub says so and offers a new ad from the user's own brief. Removing a skill is a breaking change, hence the minor bump before 1.0.
+
 ## [0.1.2] - 2026-09-13
 
 ### Fixed
@@ -28,5 +33,5 @@ First release: the hub, six capability skills, three verticals, the API skill an
 - `openclips-ad-craft`: hooks, beat maps, storyboards, creator briefs, test plans and reviews. Names no model and calls no tool.
 - Plugin manifests for Claude Code, Codex and Cursor. The Claude Code and Cowork plugin registers the OpenClips MCP server on install.
 - Install guides for people and for agents.
-- An eval harness (`evals/`) that runs every skill against the development server with spend tools withheld, and forty-eight cases.
+- An eval harness (`evals/`) that runs every skill against the development server with spend tools withheld.
 - A pack lint, a dev-to-public sync, and one script that runs every gate locally (`scripts/check.sh`); there is no CI.
