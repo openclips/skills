@@ -28,7 +28,7 @@ Customize, then Plugins: add the marketplace `openclips/skills`, install `opencl
 
 ```bash
 codex mcp add openclips --url https://mcp.openclips.ai/mcp
-npx skills add openclips/skills
+npx skills add openclips/skills -y --skill '*' --agent codex
 ```
 
 Codex starts the sign-in as soon as the server is added. If no browser prompt appears, run `codex mcp login openclips`.
@@ -42,7 +42,7 @@ Add the server under `mcpServers` in `~/.cursor/mcp.json`, then install the skil
 ```
 
 ```bash
-npx skills add openclips/skills
+npx skills add openclips/skills -y --skill '*' --agent cursor
 ```
 
 Sign in when Cursor prompts for it.
@@ -54,7 +54,7 @@ Customize, then Connectors: add a custom connector named `OpenClips` with the UR
 ## Skills only, any host
 
 ```bash
-npx skills add openclips/skills
+npx skills add openclips/skills -y --skill '*' --agent '*'
 # or, for Claude Code
 gh skill install openclips/skills --all --agent claude-code --scope user
 ```

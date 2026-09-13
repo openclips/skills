@@ -9,8 +9,8 @@ Pick the first row that matches your host. These are shell commands; run them wi
 | Host | Run | Verify |
 |---|---|---|
 | Claude Code | `claude plugin marketplace add https://github.com/openclips/skills` then `claude plugin install openclips@openclips` | `claude plugin list` shows `openclips`; `claude mcp list` shows `plugin:openclips:openclips` |
-| Codex | `codex mcp add openclips --url https://mcp.openclips.ai/mcp` then `npx skills add openclips/skills -y` | a skill named `openclips` is installed and a server named `openclips` is registered |
-| Anything else | `npx skills add openclips/skills -y`, then add an MCP server named `openclips` at `https://mcp.openclips.ai/mcp` the way your host adds remote servers | same |
+| Codex | `codex mcp add openclips --url https://mcp.openclips.ai/mcp` then `npx skills add openclips/skills -y --skill '*' --agent codex` | a skill named `openclips` is installed and a server named `openclips` is registered |
+| Anything else | `npx skills add openclips/skills -y --skill '*' --agent '*'`, then add an MCP server named `openclips` at `https://mcp.openclips.ai/mcp` the way your host adds remote servers | same |
 
 A plugin installed from the shell loads in the next session. On Claude Code, ask the user to run `/reload-plugins`; elsewhere, ask them to start a new session before step 3.
 

@@ -1,7 +1,7 @@
 {
   "name": "openclips",
   "displayName": "OpenClips",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Make ad creative from your product catalogue with OpenClips: image ads, marketing videos and creator clips, through the OpenClips MCP server.",
   "author": {
     "name": "OpenClips"
