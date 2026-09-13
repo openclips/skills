@@ -155,7 +155,7 @@ def test_allow_list_is_prefixed_with_server_key_and_never_contains_spend_tools()
     joined = " ".join(cmd)
     assert "--allowedTools" in cmd
     idx = cmd.index("--allowedTools")
-    assert cmd[idx + 1] == "mcp__openclips__list_products,mcp__openclips__load_skill"
+    assert cmd[idx + 1] == "Read,mcp__openclips__list_products,mcp__openclips__load_skill"
     for spend in runner.SPEND_TOOLS:
         assert spend not in joined
     assert cmd[cmd.index("--setting-sources") + 1] == "project" and "--bare" not in cmd
@@ -237,7 +237,7 @@ import headers_helper  # noqa: E402
 
 
 def test_static_token_wins():
-    h = headers_helper.headers({"OPENCLIPS_MCP_TOKEN": "abc"}, "https://mcp.openclips.tech/mcp")
+    h = headers_helper.headers({"OPENCLIPS_MCP_TOKEN": "abc"}, "https://mcp.example.test/mcp")
     assert h == {"Authorization": "Bearer abc"}
 
 
@@ -245,27 +245,27 @@ def test_refresh_grant_discovers_endpoint_from_origin():
     seen = {}
     def fetch(url):
         seen["meta"] = url
-        return {"token_endpoint": "https://mcp.openclips.tech/token"}
+        return {"token_endpoint": "https://mcp.example.test/token"}
     def post(url, form):
         seen["post"] = (url, form)
         return {"access_token": "fresh"}
     h = headers_helper.headers({"OPENCLIPS_DEV_CLIENT_ID": "cid", "OPENCLIPS_DEV_REFRESH_TOKEN": "rt"},
-                               "https://mcp.openclips.tech/mcp", fetch=fetch, post=post)
+                               "https://mcp.example.test/mcp", fetch=fetch, post=post)
     assert h == {"Authorization": "Bearer fresh"}
-    assert seen["meta"] == "https://mcp.openclips.tech/.well-known/oauth-authorization-server"
-    assert seen["post"][0] == "https://mcp.openclips.tech/token"
+    assert seen["meta"] == "https://mcp.example.test/.well-known/oauth-authorization-server"
+    assert seen["post"][0] == "https://mcp.example.test/token"
     assert seen["post"][1]["grant_type"] == "refresh_token"
 
 
 def test_missing_credentials_exit_nonzero():
     with pytest.raises(SystemExit):
-        headers_helper.headers({}, "https://mcp.openclips.tech/mcp")
+        headers_helper.headers({}, "https://mcp.example.test/mcp")
 
 
 # --- settings, auth gate, checkout guard -----------------------------------------
 
 def test_settings_carry_api_key_helper_and_hook():
-    s = json.loads(runner.settings_json(Path("/x/preview_only.py")))
+    s = json.loads(runner.settings_json(Path("/x/preview_only.py"), env={"ANTHROPIC_API_KEY": "k"}))
     assert s["apiKeyHelper"] == "printenv ANTHROPIC_API_KEY"
     assert s["hooks"]["PreToolUse"][0]["matcher"] == "mcp__.*call_api$"
     assert "preview_only.py" in s["hooks"]["PreToolUse"][0]["hooks"][0]["command"]
@@ -382,12 +382,41 @@ def test_checkout_with_default_mode_or_hooks_is_refused(tmp_path):
         runner.refuse_permissive_checkout(tmp_path)
 
 
-def test_live_sweep_requires_credentials_before_the_first_case():
+def test_live_sweep_requires_credentials_before_the_first_case(tmp_path):
+    helper = tmp_path / "helper.json"
+    helper.write_text(json.dumps({"mcpServers": {"openclips": {"type": "http", "url": "https://x/mcp", "headersHelper": "python3 h.py"}}}))
+    stored = tmp_path / "stored.json"
+    stored.write_text(json.dumps({"mcpServers": {"openclips-dev": {"type": "http", "url": "https://x/mcp"}}}))
     with pytest.raises(runner.UnsafeCase):
-        runner.require_credentials({})
+        runner.require_credentials({}, helper, logged_in=False)
     with pytest.raises(runner.UnsafeCase):
-        runner.require_credentials({"ANTHROPIC_API_KEY": "k"})
+        runner.require_credentials({"ANTHROPIC_API_KEY": "k"}, helper, logged_in=False)
     with pytest.raises(runner.UnsafeCase):
-        runner.require_credentials({"ANTHROPIC_API_KEY": "k", "OPENCLIPS_DEV_CLIENT_ID": "c"})
-    runner.require_credentials({"ANTHROPIC_API_KEY": "k", "OPENCLIPS_MCP_TOKEN": "t"})
-    runner.require_credentials({"ANTHROPIC_API_KEY": "k", "OPENCLIPS_DEV_CLIENT_ID": "c", "OPENCLIPS_DEV_REFRESH_TOKEN": "r"})
+        runner.require_credentials({"ANTHROPIC_API_KEY": "k", "OPENCLIPS_DEV_CLIENT_ID": "c"}, helper, logged_in=False)
+    runner.require_credentials({"ANTHROPIC_API_KEY": "k", "OPENCLIPS_MCP_TOKEN": "t"}, helper, logged_in=False)
+    runner.require_credentials({"ANTHROPIC_API_KEY": "k", "OPENCLIPS_DEV_CLIENT_ID": "c", "OPENCLIPS_DEV_REFRESH_TOKEN": "r"}, helper, logged_in=False)
+    # The CLI's own login and its own MCP sign-in carry a local run.
+    runner.require_credentials({}, stored, logged_in=True)
+    with pytest.raises(runner.UnsafeCase):
+        runner.require_credentials({}, helper, logged_in=True)
+
+
+def test_api_key_helper_only_when_a_key_is_set():
+    assert "apiKeyHelper" in runner.settings_json(None, env={"ANTHROPIC_API_KEY": "k"})
+    assert "apiKeyHelper" not in runner.settings_json(None, env={})
+
+
+def test_case_prefix_filter_narrows_within_a_skill():
+    root = Path(__file__).resolve().parents[1] / "cases"
+    names = [c.name for c in runner.load_cases(root, only=None, cases="craft-,api-04")]
+    assert names and all(n.startswith(("craft-", "api-04")) for n in names)
+    assert [c.name for c in runner.load_cases(root, only="openclips-api", cases="craft-")] == []
+
+
+def test_read_is_always_pre_approved_and_nothing_else_is_added():
+    cmd = runner.build_command(prompt="hi", allow=[], server_key="openclips", mcp_config=None,
+                               plugin_dir=".", model="sonnet", max_turns=5, max_budget=0.5, settings_json=None)
+    assert cmd[cmd.index("--allowedTools") + 1] == "Read"
+    cmd = runner.build_command(prompt="hi", allow=["list_products"], server_key="openclips", mcp_config="x.json",
+                               plugin_dir=".", model="sonnet", max_turns=5, max_budget=0.5, settings_json=None)
+    assert cmd[cmd.index("--allowedTools") + 1] == "Read,mcp__openclips__list_products"
