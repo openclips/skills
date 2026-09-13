@@ -28,7 +28,6 @@ Skills-only installs (`npx skills add openclips/skills -y --skill '*' --agent '*
 | [`openclips-clips`](skills/openclips-clips/SKILL.md) | Creator, testimonial, per-language, two-voice, cinematic and paper-collage films on the clips lanes, catalogue first. |
 | [`openclips-edit`](skills/openclips-edit/SKILL.md) | Change a creative that exists: size, language, resolution, variations, signal-level clean-ups, ad copy, watermark. |
 | [`openclips-catalog-setup`](skills/openclips-catalog-setup/SKILL.md) | Import a product from its URL or photos, create one by hand, keep it current. Brands come with products. |
-| [`openclips-competitor-recreate`](skills/openclips-competitor-recreate/SKILL.md) | Recreate a competitor's ad in your own brand: its structure and mood, never its text, logo or product. |
 | [`openclips-real-estate`](skills/openclips-real-estate/SKILL.md) | Listing ads for agents: a 30-second property video from the listing, listing images, photo clean-ups. Every claim comes from the listing. |
 | [`openclips-saas-explainer`](skills/openclips-saas-explainer/SKILL.md) | Explainer and app-demo videos for software products on the paper-collage and presenter-plus-screens lanes. |
 | [`openclips-ecommerce`](skills/openclips-ecommerce/SKILL.md) | Ads across a store's catalogue: one look per product in every channel size, creator videos for hero products, localised variants, batched honestly. |
