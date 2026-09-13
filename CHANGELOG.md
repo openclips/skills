@@ -4,6 +4,11 @@ All notable changes to this pack. The format follows Keep a Changelog, and the p
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-13
+
+### Changed
+- The eval unit tests use a placeholder host; no development hostname ships in the public tree.
+
 ## [0.1.0] - 2026-09-12
 
 First release: the hub, six capability skills, three verticals, the API skill and the craft skill.

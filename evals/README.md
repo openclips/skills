@@ -24,7 +24,7 @@ python3 evals/runner.py --cases evals/cases --dry-run               # print the 
 OPENCLIPS_MCP_TOKEN=… ANTHROPIC_API_KEY=… python3 evals/runner.py --cases evals/cases --only openclips --max-sweep-usd 3
 ```
 
-The runner stages a copy of the plugin without its bundled production server, so a run only ever talks to the server in `evals/mcp.ci.json`. Results land in `evals/results/`.
+The runner stages a copy of the plugin without its bundled production server, so a run only ever talks to the server in `evals/mcp.ci.json`. `Read` is always pre-approved, because skills tell the agent to read their own `references/` files; every other tool comes from the case's `allow` list. Results land in `evals/results/`.
 
 ## Case schema
 
@@ -50,10 +50,11 @@ Tool names are matched on the part after the last `__`, so cases are host-agnost
 
 ## Running the sweep
 
-There is no CI. The maintainer runs the sweep by hand, from a checkout with the credentials in the environment:
+There is no CI. The maintainer runs the sweep by hand. Credentials come from the environment (`ANTHROPIC_API_KEY`, and the dev-server variables the headers helper reads), or from the claude CLI's own logins: a `claude auth login` session stands in for the API key, and a `--mcp-config` that names a server the CLI has already signed in to (`claude mcp add … && claude mcp login …`, with no `headersHelper`) stands in for the server credential. Run from a checkout without `.claude/settings*.json` that carry allow rules, a `defaultMode` or hooks; a fresh `git worktree` is the easy way.
 
 ```bash
 python3 evals/runner.py --cases evals/cases --only openclips --model sonnet --max-sweep-usd 3   # one skill
+python3 evals/runner.py --cases evals/cases --case craft-,api-04 --model sonnet --max-sweep-usd 3   # named cases, by prefix
 python3 evals/runner.py --cases evals/cases --model sonnet --max-sweep-usd 8                    # everything
 python3 evals/runner.py --cases evals/cases --model opus --max-sweep-usd 10 --plugin-dir "" --results evals/results-ablation   # ablation, skills removed: informational
 ```

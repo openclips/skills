@@ -7,14 +7,14 @@
   },
   "metadata": {
     "description": "Official OpenClips skills: make ad creative from your product catalogue.",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "plugins": [
     {
       "name": "openclips",
       "source": "./",
       "description": "Make ad creative from your product catalogue with OpenClips: image ads, marketing videos and creator clips, through the OpenClips MCP server.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "design",
       "homepage": "https://openclips.ai",
       "license": "MIT"

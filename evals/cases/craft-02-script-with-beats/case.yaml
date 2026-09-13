@@ -9,5 +9,5 @@ assert:
   tools_not_called: [Bash, WebFetch, WebSearch]
   result_regex_all:
     - '\b\d+(?::\d\d)?(?:\.\d)?\s*(?:s|sec(?:onds?|s)?)?\s*(?:to|-|–)\s*(?:\d+:\d\d|\d+(?:\.\d)?\s*(?:s|sec(?:onds?|s)?))\b'      # beats carry a time range, not a bare length
-    - '(?i)(\b\d+\s+words\b|\b(ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty)(-[a-z]+)?\s+words\b|word count:?\s*\d+)'   # the count is stated as a number
+    - '(?i)(\b\d+\s+(spoken\s+)?words\b|\b(ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty)(-[a-z]+)?\s+words\b|word count:?\s*\d+)'   # the count is stated as a number
   result_not_regex: '(?i)(generate_|call_api|openclips:|"[^"\n]*\b(amazing|game-changing|premium)\b[^"\n]*")'   # no tool talk; none of the banned adjectives inside a quoted line

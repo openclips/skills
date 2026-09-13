@@ -8,7 +8,7 @@ answers permission prompts, so any attempt lands in permission_denials.
 
 Usage:
   python3 evals/runner.py --cases evals/cases [--only skill[,skill]] [--model sonnet]
-                          [--max-sweep-usd 3] [--mcp-config evals/mcp.ci.json]
+                          [--case craft-,api-04] [--max-sweep-usd 3] [--mcp-config evals/mcp.ci.json]
                           [--plugin-dir .] [--results evals/results] [--dry-run]
 """
 from __future__ import annotations
@@ -245,8 +245,10 @@ class Case:
     max_budget: float
 
 
-def load_cases(root: Path, only: str | None) -> list[Case]:
+def load_cases(root: Path, only: str | None, cases: str | None = None) -> list[Case]:
+    """`only` filters by skill name; `cases` by case-name prefix (comma-separated). Both narrow."""
     wanted = {s.strip() for s in only.split(",") if s.strip()} if only else None
+    prefixes = [s.strip() for s in cases.split(",") if s.strip()] if cases else None
     out: list[Case] = []
     for d in sorted(p for p in Path(root).iterdir() if p.is_dir()):
         spec = d / "case.yaml"
@@ -255,6 +257,8 @@ def load_cases(root: Path, only: str | None) -> list[Case]:
         y = yaml.safe_load(spec.read_text()) or {}
         skill = str(y.get("skill", d.name))
         if wanted is not None and skill not in wanted:
+            continue
+        if prefixes is not None and not any(d.name.startswith(p) for p in prefixes):
             continue
         out.append(Case(
             name=d.name, prompt=(d / "prompt.md").read_text().strip(), skill=skill,
@@ -267,11 +271,13 @@ def load_cases(root: Path, only: str | None) -> list[Case]:
     return out
 
 
-def settings_json(hook_path: Path | None) -> str:
-    """The --settings payload: the API key helper (non-bare -p on a fresh
-    machine does not read ANTHROPIC_API_KEY on its own) and, when a server is
-    configured, the call_api preview guard."""
-    s: dict = {"apiKeyHelper": "printenv ANTHROPIC_API_KEY"}
+def settings_json(hook_path: Path | None, env: dict | None = None) -> str:
+    """The --settings payload: the API key helper when an API key is set
+    (non-bare -p on a fresh machine does not read ANTHROPIC_API_KEY on its
+    own; without a key the maintainer's claude.ai login carries the run) and,
+    when a server is configured, the call_api preview guard."""
+    env = os.environ if env is None else env
+    s: dict = {"apiKeyHelper": "printenv ANTHROPIC_API_KEY"} if env.get("ANTHROPIC_API_KEY") else {}
     if hook_path is not None:
         s["hooks"] = {"PreToolUse": [{"matcher": "mcp__.*call_api$", "hooks": [
             {"type": "command", "command": f"{sys.executable} {hook_path}"}]}]}
@@ -291,8 +297,9 @@ def build_command(*, prompt: str, allow: list[str], server_key: str, mcp_config:
            "--model", model, "--max-turns", str(max_turns), "--max-budget-usd", str(max_budget)]
     if plugin_dir:
         cmd += ["--plugin-dir", plugin_dir]
-    if allow:
-        cmd += ["--allowedTools", ",".join(f"mcp__{server_key}__{a}" for a in allow)]
+    # Read is always allowed: skills tell the agent to read their own references/ files,
+    # and a denied Read would fail every case on the harness rather than on the skill.
+    cmd += ["--allowedTools", ",".join(["Read", *(f"mcp__{server_key}__{a}" for a in allow)])]
     if settings_json:
         cmd += ["--settings", settings_json]
     if resume:
@@ -323,12 +330,30 @@ def refuse_permissive_checkout(cwd: Path) -> None:
             raise UnsafeCase(f"{p} carries {sorted(risky)}; evals refuse to run with it")
 
 
-def require_credentials(env: dict) -> None:
+def claude_logged_in() -> bool:
+    """True when the claude CLI has a claude.ai login of its own."""
+    try:
+        p = subprocess.run(["claude", "auth", "status", "--json"], capture_output=True, text=True, timeout=30)
+        return p.returncode == 0 and bool(json.loads(p.stdout).get("loggedIn"))
+    except (OSError, ValueError, subprocess.TimeoutExpired):
+        return False
+
+
+def require_credentials(env: dict, mcp_config: Path, logged_in: bool | None = None) -> None:
     """Fail before the first claude call when a live sweep cannot succeed,
-    rather than spending API budget on cases that all fail on sign-in."""
+    rather than spending on cases that all fail on sign-in. Anthropic: an API
+    key, or the claude CLI's own login. OpenClips: the headers helper's
+    variables when the MCP config uses the helper; otherwise the config names
+    a server the CLI has already signed in to, and the CLI's store carries it."""
     if not env.get("ANTHROPIC_API_KEY"):
-        raise UnsafeCase("ANTHROPIC_API_KEY is not set")
-    if not (env.get("OPENCLIPS_MCP_TOKEN") or (env.get("OPENCLIPS_DEV_CLIENT_ID") and env.get("OPENCLIPS_DEV_REFRESH_TOKEN"))):
+        if not (claude_logged_in() if logged_in is None else logged_in):
+            raise UnsafeCase("set ANTHROPIC_API_KEY, or sign the claude CLI in (claude auth login)")
+    try:
+        servers = (json.loads(mcp_config.read_text()).get("mcpServers") or {}).values()
+    except (OSError, ValueError):
+        servers = []
+    uses_helper = any("headersHelper" in s for s in servers)
+    if uses_helper and not (env.get("OPENCLIPS_MCP_TOKEN") or (env.get("OPENCLIPS_DEV_CLIENT_ID") and env.get("OPENCLIPS_DEV_REFRESH_TOKEN"))):
         raise UnsafeCase("set OPENCLIPS_MCP_TOKEN, or OPENCLIPS_DEV_CLIENT_ID and OPENCLIPS_DEV_REFRESH_TOKEN")
 
 
@@ -379,8 +404,9 @@ def run_case(c: Case, args, server_key: str) -> RunOutcome:
     if t1.empty or code != 0:
         g = Grade([f"claude exited {code}: {err.strip()[-300:]}"])
         return RunOutcome(g, [t1], err[-2000:])
-    if t1.api_key_source in ("", "none"):
-        return RunOutcome(Grade(["claude has no API key (apiKeySource none); set ANTHROPIC_API_KEY"]), [t1], err[-2000:])
+    if t1.api_key_source in ("", "none") and (t1.is_error or not (t1.result or "").strip()):
+        # A claude.ai login also reports apiKeySource "none" but answers; only an empty or errored run means no credential.
+        return RunOutcome(Grade(["claude has no credential (apiKeySource none and no answer); set ANTHROPIC_API_KEY or sign the CLI in"]), [t1], err[-2000:])
     if c.turns == 1:
         return RunOutcome(grade(t1, c.asserts), [t1], err[-2000:])
 
@@ -404,6 +430,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cases", default="evals/cases")
     ap.add_argument("--only", help="comma-separated skill names")
+    ap.add_argument("--case", help="comma-separated case-name prefixes, e.g. craft-,api-04")
     ap.add_argument("--model", default="sonnet")
     ap.add_argument("--max-sweep-usd", type=float, default=3.0)
     ap.add_argument("--mcp-config", default="evals/mcp.ci.json")
@@ -413,17 +440,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
-    cases = load_cases(Path(args.cases), args.only)
+    cases = load_cases(Path(args.cases), args.only, args.case)
     if not cases:
         print(f"::error::no eval cases match --only {args.only!r}; refusing to report a green run", file=sys.stderr)
         return 2
 
     if not args.dry_run:
         refuse_permissive_checkout(Path.cwd())
-        require_credentials(dict(os.environ))
         if not Path(args.mcp_config).exists():
             print(f"::error::{args.mcp_config} not found; the maintainers supply the MCP config for live runs", file=sys.stderr)
             return 2
+        require_credentials(dict(os.environ), Path(args.mcp_config))
     server_key = "openclips"
     if not args.dry_run and Path(args.mcp_config).exists():
         keys = list((json.loads(Path(args.mcp_config).read_text()).get("mcpServers") or {}).keys())
