@@ -9,7 +9,7 @@ description: >-
   images", "creator videos for my bestsellers", "ads for my top ten
   products", "these in German and French too". NOT for: a single one-off
   ad (openclips-image-ads, openclips-video-ads), one creator video for one
-  product (openclips-clips), adding one product (openclips-catalog-setup),
+  product (openclips-clips), adding one product (openclips-brand-intel),
   changing one creative (openclips-edit), a property listing
   (openclips-real-estate), a software product's explainer or demo video
   (openclips-saas-explainer), certifying that an image meets a
@@ -25,7 +25,7 @@ The unit of work is the catalogue, not the creative: which products, one look ac
 ## 1. The products
 
 - `openclips:list_products` for what the workspace has; the user names the subset ("top ten", "these three", "everything"). Refer to each as `#ID (name)`. "Everything" on a large catalogue runs in rounds of at most ten.
-- Product URLs not yet imported: `openclips:get_product_by_url` first, then the free import (consent, `openclips:start_product_analysis`, `openclips:await_product`) per URL, as `openclips-catalog-setup` does. Products come with their brand; nothing creates a brand directly.
+- Product URLs not yet imported: `openclips:get_product_by_url` first, then the free import (consent, `openclips:start_product_analysis`, `openclips:await_product`) per URL, as `openclips-brand-intel` does. Products come with their brand; nothing creates a brand directly.
 - Each product's image binds through its product id on the image routes; check with `openclips:get_product` that the product carries one before composing, so the product in the ad is the product in the store.
 
 ## 2. Pick the route

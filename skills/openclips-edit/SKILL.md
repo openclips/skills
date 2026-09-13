@@ -12,7 +12,7 @@ description: >-
   "lip-sync this to my audio". NOT for: a brand-new image or video (openclips-image-ads,
   openclips-video-ads, openclips-clips), a competitor's ad as the source
   (not offered), editing a
-  product's details (openclips-catalog-setup), deleting a creative
+  product's details (openclips-brand-intel), deleting a creative
   (openclips-api), sizes or markets across a whole catalogue
   (openclips-ecommerce), copy with nothing to attach it to
   (openclips-ad-craft), the user's own logo as a watermark (not offered).

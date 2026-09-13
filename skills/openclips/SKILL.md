@@ -11,7 +11,7 @@ description: >-
   (answered: OpenClips makes creative, not ad delivery). NOT for: image
   ads (openclips-image-ads), video ads (openclips-video-ads), creator,
   cinematic or paper films (openclips-clips), editing a creative or its
-  copy (openclips-edit), products or brand setup (openclips-catalog-setup),
+  copy (openclips-edit), products or brand setup (openclips-brand-intel),
   recreating a competitor's ad (not offered), listing, software or
   store ads (openclips-real-estate, openclips-saas-explainer,
   openclips-ecommerce), folders or API code (openclips-api), hooks,
@@ -63,7 +63,7 @@ Never fall back to calling the OpenClips REST API yourself. The server also serv
 | Ads across a store's catalogue | `openclips-ecommerce` | `generate-image-templates` |
 | To change an existing creative (size, language, sharpness, background, variations) or write its ad copy | `openclips-edit` | `revise-creative-other`, `revise-creative-variate`, `enhance-asset`, `generate-ad-copy` |
 | Their own version of a competitor's ad | not offered: say so, and offer a new ad from their own brief through `openclips-image-ads` | none |
-| To add or update a product, or "set up my brand" | `openclips-catalog-setup` | `create-product`, `update-product` |
+| To add or update a product, or "set up my brand" | `openclips-brand-intel` | `create-product`, `update-product` |
 | Folders, any endpoint no skill covers, or OpenClips from their own code | `openclips-api` | `creative-folders` for folders |
 | Hooks, scripts, storyboards, test ideas, or copy with no creative to attach it to | `openclips-ad-craft` | none |
 | To know what something is | stay here | `identify-entity` |

@@ -1,5 +1,5 @@
 ---
-name: openclips-catalog-setup
+name: openclips-brand-intel
 description: >-
   Gets products into an OpenClips workspace and keeps them current: imports
   a product from its URL, creates one by hand when there is no page, and
@@ -17,7 +17,7 @@ license: MIT
 compatibility: Needs the OpenClips MCP server, connected and signed in. Works alone; the openclips hub carries the shared rules.
 ---
 
-# OpenClips catalogue setup
+# OpenClips brand intel
 
 Most generation starts from a product, so this is often the first skill a new workspace needs. Nothing here spends credits: importing and editing products is free, so there is no cost gate, only plain consent where something is created. If the `openclips` hub skill is installed, its rules apply; if not, read `references/rules.md` first.
 

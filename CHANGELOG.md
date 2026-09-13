@@ -4,6 +4,11 @@ All notable changes to this pack. The format follows Keep a Changelog, and the p
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-13
+
+### Changed
+- `openclips-catalog-setup` is renamed `openclips-brand-intel`. Same job: get products into the workspace and keep them current; brands come with products. A rename is a breaking change for anyone invoking the skill by name, hence the minor bump before 1.0.
+
 ## [0.2.0] - 2026-09-13
 
 ### Removed
@@ -27,7 +32,7 @@ First release: the hub, six capability skills, three verticals, the API skill an
 
 ### Added
 - `openclips`, the hub skill: connecting, workspace and product resolution, the spending and waiting rules, and routing.
-- Six capability skills: `openclips-image-ads`, `openclips-video-ads`, `openclips-clips`, `openclips-edit`, `openclips-catalog-setup`, `openclips-competitor-recreate`. Each is a thin router over the server's own playbooks; models, lanes, prices and enums are read live.
+- Six capability skills: `openclips-image-ads`, `openclips-video-ads`, `openclips-clips`, `openclips-edit`, `openclips-brand-intel`, `openclips-competitor-recreate`. Each is a thin router over the server's own playbooks; models, lanes, prices and enums are read live.
 - Three verticals: `openclips-real-estate`, `openclips-saas-explainer`, `openclips-ecommerce`.
 - `openclips-api`: the escape hatch through `list_endpoints` and `call_api`, folders, the removal confirmation, and the developer path with a personal access token against `api.openclips.ai`.
 - `openclips-ad-craft`: hooks, beat maps, storyboards, creator briefs, test plans and reviews. Names no model and calls no tool.

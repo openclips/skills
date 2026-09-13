@@ -11,7 +11,7 @@ description: >-
   openclips-image-ads), a creator testimonial with no screens
   (openclips-clips), a still launch graphic (openclips-image-ads), changing
   a video that exists (openclips-edit), a software product not yet in the
-  workspace (openclips-catalog-setup), the script alone (openclips-ad-craft).
+  workspace (openclips-brand-intel), the script alone (openclips-ad-craft).
 license: MIT
 compatibility: Needs the OpenClips MCP server, connected and signed in. Works alone; the openclips hub carries the shared rules.
 ---
@@ -31,7 +31,7 @@ Call `openclips:clips_catalog` for the workspace before composing. Read the chos
 | "explain what it does", "how it works", "explainer", "paper", "collage" | the narrated paper-collage lane | a brand in the workspace; a product photo **or** a software category, never both; formatless; narration in English only; one fixed resolution |
 | "demo", "show the app", "walk through the screens", "presenter over my product" | the presenter-plus-app-screens lane | a format from its list, the **product URL** (the lane crawls it for facts and screens and refuses to run without it), the brand name; reads a language; resolution changes the price |
 
-Unclear, and screens were mentioned: ask one question. Unclear otherwise: the explainer. A software category with no brand in the workspace is refused by the explainer lane, and brands only come from adding a product, so hand a brand-less workspace to catalogue setup first.
+Unclear, and screens were mentioned: ask one question. Unclear otherwise: the explainer. A software category with no brand in the workspace is refused by the explainer lane, and brands only come from adding a product, so hand a brand-less workspace to brand intel first.
 
 ## 3. Compose
 

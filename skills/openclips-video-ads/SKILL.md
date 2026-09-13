@@ -13,7 +13,7 @@ description: >-
   app demo (openclips-saas-explainer), a property tour
   (openclips-real-estate), changing a video that exists (openclips-edit), a
   still image (openclips-image-ads), a product not yet in the workspace
-  (openclips-catalog-setup), hooks, scripts or storyboards with nothing to
+  (openclips-brand-intel), hooks, scripts or storyboards with nothing to
   render (openclips-ad-craft).
 license: MIT
 compatibility: Needs the OpenClips MCP server, connected and signed in. Works alone; the openclips hub carries the shared rules.
@@ -25,7 +25,7 @@ New video creative from a marketplace video model. This is the server's default 
 
 ## 1. Resolve the product and bind the image
 
-- Find the product with `openclips:list_products` or `openclips:get_product_by_url`; refer to it as `#ID (name)`. Several match: ask. None, and the user named one: hand over to catalogue setup.
+- Find the product with `openclips:list_products` or `openclips:get_product_by_url`; refer to it as `#ID (name)`. Several match: ask. None, and the user named one: hand over to brand intel.
 - **A product id gives brand context only; it does not put the product in frame.** To show the real product, read its `imageUrls` with `openclips:get_product` and send one as the first image with the first-frame role, or with the reference role to hold identity without dictating the frame. Say at the gate which image is bound. Without a bound image, the model invents a stand-in.
 - "Animate this" with an image URL: that URL goes straight into the images as the first frame. There is no upload step on this surface; if the user pasted a picture rather than a link, ask for a hosted URL.
 

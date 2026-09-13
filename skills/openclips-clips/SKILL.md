@@ -13,7 +13,7 @@ description: >-
   (openclips-saas-explainer), a property tour (openclips-real-estate), a
   still image (openclips-image-ads), creator videos across many products
   (openclips-ecommerce), changing a film that exists (openclips-edit), a
-  product not yet in the workspace (openclips-catalog-setup), a script or
+  product not yet in the workspace (openclips-brand-intel), a script or
   storyboard with nothing to shoot (openclips-ad-craft).
 license: MIT
 compatibility: Needs the OpenClips MCP server, connected and signed in. Works alone; the openclips hub carries the shared rules.

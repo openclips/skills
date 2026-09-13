@@ -11,7 +11,7 @@ description: >-
   "openapi.json", "put these in a folder", "delete this creative", "edit the
   video timeline", "which endpoint does that". NOT for: anything a spoke
   already covers, which stays with that spoke and its gate (openclips-image-ads,
-  openclips-video-ads, openclips-clips, openclips-edit, openclips-catalog-setup,
+  openclips-video-ads, openclips-clips, openclips-edit, openclips-brand-intel,
   openclips-real-estate, openclips-saas-explainer, openclips-ecommerce),
   running ads or reading campaign performance (not offered: OpenClips makes
   creative and does not deliver it).

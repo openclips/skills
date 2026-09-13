@@ -13,7 +13,7 @@ description: >-
   offered), any video (openclips-video-ads, or
   openclips-clips for a person on camera), listing images
   (openclips-real-estate), a whole store (openclips-ecommerce), a product not
-  yet in the workspace (openclips-catalog-setup), copy with nothing to attach
+  yet in the workspace (openclips-brand-intel), copy with nothing to attach
   it to (openclips-ad-craft).
 license: MIT
 compatibility: Needs the OpenClips MCP server, connected and signed in. Works alone; the openclips hub carries the shared rules.
@@ -25,7 +25,7 @@ New static image creative. Three routes, one default. If the `openclips` hub ski
 
 ## 1. Resolve the source
 
-- **A product in the workspace** is the usual source: find it with `openclips:list_products` or `openclips:get_product_by_url` and refer to it as `#ID (name)`. Several match: ask by name. None, and the user named one: hand over to catalogue setup.
+- **A product in the workspace** is the usual source: find it with `openclips:list_products` or `openclips:get_product_by_url` and refer to it as `#ID (name)`. Several match: ask by name. None, and the user named one: hand over to brand intel.
 - **A photo URL** with "make an ad from this" is a reference for a new ad, and this skill handles it: the URL goes into the reference images. There is no upload step on this surface, so a picture pasted without a link needs a hosted URL first. Only when the user wants *that image itself* changed is it editing.
 - No product and no image: text-only generation is allowed; say that nothing anchors the product's real look.
 
