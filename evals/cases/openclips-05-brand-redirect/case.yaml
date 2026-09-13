@@ -1,0 +1,11 @@
+skill: openclips
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_brands, get_brand, list_products, list_skills, load_skill]
+assert:
+  mcp_connected: true
+  denied_tools: []                 # in particular, no call_api attempt at a brand route
+  tools_not_called: [call_api]
+  result_regex: "(?i)(add|import|scrape)[^.]{0,40}product"   # redirects to adding a product
+  result_not_regex: "(?i)(\\bI(.ve| have)\\s+(just\\s+)?created\\b[^.;]{0,40}brand|\\bbrand\\b[^.;]{0,40}\\b(has been|was|is now)\\s+created|\\bbrand\\s+created\\b)"

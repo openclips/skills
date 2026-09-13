@@ -1,0 +1,10 @@
+skill: openclips-clips
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  result_regex: '(?i)(english[ -]only|only (in |renders? )?english|locked to english|can.?t (be|do|render|narrate)|cannot (be|render|narrate)|not (available|supported|possible))'
+  result_not_regex: '(?i)lang(uage)?\W{0,4}(fr\b|french)'   # must not compose a cinematic body carrying French

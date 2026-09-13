@@ -1,0 +1,11 @@
+skill: openclips-video-ads
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [clips_catalog]              # a person on screen is a clips film
+  tools_not_called: [generate_marketplace_proxy]
+  denied_tools: []
+  result_regex: '(?i)(creator|avatar|lane|proceed\?|shall I|which)'

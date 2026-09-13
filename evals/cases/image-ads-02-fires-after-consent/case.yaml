@@ -1,0 +1,12 @@
+skill: openclips-image-ads
+shape: fires-after-consent
+turns: 2
+consent: 'yes, go ahead'
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog, wait_for_creative]
+assert_turn1:
+  denied_tools: []
+assert:
+  mcp_connected: true
+  denied_tools: [generate_marketplace_proxy]   # exactly one attempt, only after the yes
+  tools_not_called: [generate_image_templates, generate_clips_video]

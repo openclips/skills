@@ -1,0 +1,15 @@
+skill: openclips-ecommerce
+shape: pauses-before-spending
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [list_products]
+  tools_not_called: [generate_clips_video]
+  denied_tools: []
+  result_regex_all:
+    - '(?i)(proceed\?|go ahead|approve|shall I)'
+    - '(?i)total'                                   # one confirmation lists each call, the total and the balance
+    - '(?i)lumen arc'
+    - '(?i)noteflow'                                # both products are in the one confirmation

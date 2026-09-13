@@ -1,0 +1,11 @@
+skill: openclips-api
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  tools_called_in_order: [load_skill, call_api]                        # the image-ads playbook and its preview, exactly as without the word API
+  tools_not_called: [generate_marketplace_proxy, generate_image_templates]
+  result_regex: '(?i)(proceed\?|go ahead|shall I|approve)'          # a covered request still lands at the ordinary gate, never a raw POST

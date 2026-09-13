@@ -1,0 +1,10 @@
+skill: openclips-clips
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  tools_called_in_order: [clips_catalog]
+  result_regex: '(?i)(two (films|submits|runs|separate)|separate (film|submit|run)s?|one (film |submit )?per language|each language|separately|twice)'   # one language per submit
