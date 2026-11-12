@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "openclips": {
+      "type": "http",
+      "url": "https://mcp.openclips.ai/mcp"
+    }
+  }
+}

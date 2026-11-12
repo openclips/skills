@@ -1,0 +1,11 @@
+skill: openclips
+shape: routes-right
+turns: 1
+fixture: eval-workspace            # exactly one workspace, so the hub does not need to ask which
+allow: [list_my_workspaces, list_products, get_product, list_skills, load_skill]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [list_my_workspaces, list_products]
+  denied_tools: []
+  result_regex: "(#\\d+ \\(|\\|.*\\|)"   # `#ID (name)` or a table; a headless run renders no card
+  result_not_regex: "\\{\\s*\""           # no raw JSON

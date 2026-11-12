@@ -1,0 +1,4 @@
+{"type":"system","subtype":"init","session_id":"sess-6","apiKeySource":"apiKeyHelper","mcp_servers":[{"name":"openclips","status":"connected"}],"mcp_server_errors":[]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","id":"t9","name":"mcp__openclips__generate_clips_video","input":{"workspace_id":976,"lane":"ugc-15"}}]}}
+{"type":"user","message":{"content":[{"type":"tool_result","tool_use_id":"t9","content":"{\"error\": \"Not enough tokens: this needs 900 but the workspace has 10 left.\"}","is_error":true}]}}
+{"type":"result","subtype":"success","session_id":"sess-6","result":"The balance is too low.","total_cost_usd":0.2,"num_turns":2,"permission_denials":[],"is_error":false}

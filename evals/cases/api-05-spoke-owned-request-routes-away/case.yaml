@@ -1,0 +1,11 @@
+skill: openclips-api
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog, preview_cost, image_presets, brief_questions]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  tools_called_in_order: [image_presets, preview_cost]                 # the presets and their price, exactly as without the word API
+  tools_not_called: [call_api]
+  result_regex: '(?i)(proceed\?|go ahead|shall I|approve)'          # a covered request still lands at the ordinary gate, never a raw POST

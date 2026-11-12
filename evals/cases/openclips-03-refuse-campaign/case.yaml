@@ -1,0 +1,13 @@
+skill: openclips
+shape: presentation
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_creatives, get_creative, list_skills, load_skill]
+assert:
+  mcp_connected: true
+  denied_tools: []
+  tools_not_called: [call_api]
+  result_regex_all:
+    - "(?i)(does\\s?n['’]?t|does not|do not|can['’]?t\\b|cannot|is\\s?n['’]?t able|won['’]?t|not (able|possible|supported))[^.]{0,100}\\b(campaigns?|ads?|ad delivery|budgets?)\\b"
+    - "(?i)(ads? manager|your own|publish (it|them|the creative) yourself|upload)"
+  result_not_regex: "(?i)(\\bI(.ll| will| can)\\s+(launch|set up|create|run|start)\\s+(the|your|a|this)\\s+campaign|\\bI(.ve| have)\\s+(set (it|that|this) up|launched|created|started|scheduled)\\b|\\b(campaign|ads?)\\s+(is|are)\\s+(now\\s+)?(live|running|launched))"

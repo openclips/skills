@@ -1,0 +1,10 @@
+skill: openclips-saas-explainer
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog, preview_cost, image_presets, brief_questions, list_voices]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [brief_questions]    # the tutorial job's questions come first, all at once
+  denied_tools: []                            # the job is not opened in turn one
+  result_regex: '\?'

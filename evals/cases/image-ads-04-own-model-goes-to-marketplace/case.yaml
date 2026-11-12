@@ -1,0 +1,10 @@
+skill: openclips-image-ads
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog, preview_cost, image_presets, brief_questions]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [marketplace_models]     # a model the user picks is the marketplace route, and the roster is read live
+  denied_tools: []
+  result_not_regex: '(?i)(cheap(er|est)|more expensive|less expensive|costs? (about|around|roughly|less|more))'   # no cost talk while choosing

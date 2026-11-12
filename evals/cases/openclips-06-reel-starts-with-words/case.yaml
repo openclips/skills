@@ -1,0 +1,10 @@
+skill: openclips
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, list_creatives, list_avatars, list_voices, list_skills, load_skill, brief_questions, check_script]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [brief_questions]    # the questions are asked before any script, take or lane
+  denied_tools: []                            # nothing is filmed, voiced or opened as a job in turn one
+  result_regex: '\?'

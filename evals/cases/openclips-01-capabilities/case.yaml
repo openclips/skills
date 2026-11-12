@@ -1,0 +1,11 @@
+skill: openclips
+shape: presentation
+turns: 1
+fixture: eval-workspace            # one workspace, at least three products
+allow: [list_my_workspaces, list_skills, load_skill, list_products, list_creatives, list_brands, list_avatars]
+assert:
+  mcp_connected: true
+  denied_tools: []                 # [] = no tool outside `allow` was even attempted
+  tools_not_called: [call_api]
+  result_regex_all: ["(?i)\\bimage", "(?i)\\bvideo"]
+  result_not_regex: "(?i)\\bI(.ll| will| can| could)\\s+(launch|run|manage|schedule|publish|boost)\\s+(your\\s+|the\\s+|a\\s+)?(ads?|campaigns?|ad\\s+sets?|budgets?)\\b"

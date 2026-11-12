@@ -1,0 +1,11 @@
+skill: openclips
+shape: presentation
+turns: 1
+mcp: none                          # no MCP server configured at all
+allow: []
+assert:
+  mcp_connected: false
+  denied_tools: []                 # must not even try a shell or fetch fallback to the REST API
+  tools_not_called: [Bash, WebFetch]
+  result_regex: "(?i)(connect|/mcp|connector|claude mcp add)"
+  result_not_regex: "(?i)(curl|api\\.openclips\\.ai/api|X-Auth-Token)"

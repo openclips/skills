@@ -1,0 +1,11 @@
+skill: openclips-video-ads
+shape: routes-right
+turns: 1
+fixture: eval-workspace
+allow: [list_my_workspaces, list_products, get_product, get_product_by_url, list_brands, get_brand, list_creatives, get_creative, list_avatars, get_avatar, list_skills, load_skill, list_endpoints, marketplace_models, clips_catalog, preview_cost, image_presets, brief_questions]
+assert:
+  mcp_connected: true
+  tools_called_in_order: [brief_questions]            # someone who talks and sells starts with the script, not with a model
+  tools_not_called: [marketplace_models]
+  denied_tools: []
+  result_regex: '\?'                                  # asks the brief's open questions

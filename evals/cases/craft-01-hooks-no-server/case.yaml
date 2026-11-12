@@ -1,0 +1,13 @@
+skill: openclips-ad-craft
+shape: presentation
+turns: 1
+mcp: none                          # craft needs no server at all
+allow: []
+assert:
+  mcp_connected: false
+  denied_tools: []
+  tools_not_called: [Bash, WebFetch, WebSearch]
+  result_regex_all:
+    - '(?:(?:^|\n)[ \t]*(?:\d+[.)]|[-*•]|\*\*\d+\.\*\*|\|[ \t]*\d+[ \t]*\|)[ \t][^\n]*(?:\n(?![ \t]*(?:\d+[.)]|[-*•]|\*\*\d+\.\*\*|\|[ \t]*\d+[ \t]*\|)[ \t])[^\n]*)*){5}'   # at least five listed items; linear-time, one line per item
+    - '(?i)(tension|after,? first|result first|odd fact|reversal|demonstration|confession|question|before)'          # names the angle each hook takes
+  result_not_regex: '(?i)(generate_|call_api|preview_cost|marketplace|openclips:)'                                          # names no tool

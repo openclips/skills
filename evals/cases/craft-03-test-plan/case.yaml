@@ -1,0 +1,13 @@
+skill: openclips-ad-craft
+shape: presentation
+turns: 1
+mcp: none
+allow: []
+assert:
+  mcp_connected: false
+  denied_tools: []
+  tools_not_called: [Bash, WebFetch, WebSearch]
+  result_regex_all:
+    - '(?i)hook|opening'
+    - '(?i)(one (element|variable|thing|change) at a time|hold(ing)?:? .{0,40}(constant|the same|fixed|steady)|\bhold:\s|keep(ing)? .{0,40}(the same|constant|fixed|steady|unchanged)|kept (fixed|constant|the same)|only (change|vary)|vary:?\s*(only|just|one)|what to hold|(stays?|stay) (fixed|the same|constant)|everything else (stays|the same|fixed|constant)|single variable)'   # one variable at a time
+  result_not_regex: '(?i)(generate_|call_api|openclips:)'
